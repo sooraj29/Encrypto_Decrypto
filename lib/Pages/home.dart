@@ -27,16 +27,35 @@ class _HomeState extends State<Home> {
           ),
         ),
         body: Center(
-          child: RaisedButton.icon(
-            onPressed: (){},
-            icon: Icon(
-              Icons.home,
-            ),
-            label: const Text(
-              "Summa Button",
-            ),
-            color: Colors.lightGreenAccent[100],
-            textColor: Colors.grey[800],
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+
+                height: 100.0,
+                child: RaisedButton(
+                  onPressed: (){},
+
+                  child: const Text(
+                    "Encrypt",
+                  ),
+                  color: Colors.lightGreenAccent[100],
+                  textColor: Colors.grey[800],
+                ),
+              ),
+              RaisedButton(
+                onPressed: (){},
+
+                child: const Text(
+                  "Decrypt",
+                ),
+                color: Colors.lightGreenAccent[100],
+                textColor: Colors.grey[800],
+              ),
+
+            ],
+
           ),
         ),
       ),

@@ -34,29 +34,29 @@ class _HomeState extends State<Home> {
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(20.0,0.0,10.0,10.0),
-                child: Text(
-                  "Encrypt: Upload a document for encrypting and saving it in your database",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
+                child: RichText(
+                  text: TextSpan(
+                    children: const [
+                      TextSpan(
+                        text: "Encrypt:",
+                        style:TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        )
+                        ,),
+                      TextSpan(
+                        text: " Upload a document for encrypting and saving it in your database",
+                      ),
+                    ],
+                    style: TextStyle(
+                      color: Colors.grey[400],
+                      fontSize: 20.0,
+                    ),
                   ),
                 ),
               ),
               SizedBox(
                 height: 20.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20.0,0.0,10.0,10.0),
-                child: Text(
-                  "Decrypt: View a document from your database by decrypting it",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 70.0,
               ),
               ElevatedButton(
                 onPressed: (){},
@@ -79,6 +79,32 @@ class _HomeState extends State<Home> {
                   ),
                   elevation: 0.0,
                   shadowColor: null,
+                ),
+              ),
+              SizedBox(
+                height: 70.0,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20.0,0.0,10.0,10.0),
+                child: RichText(
+                  text: TextSpan(
+                    children: const [
+                      TextSpan(
+                        text: "Decrypt:",
+                      style:TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      )
+                        ,),
+                      TextSpan(
+                        text: " View a document from your database by decrypting it",
+                      ),
+                    ],
+                    style: TextStyle(
+                      color: Colors.grey[400],
+                      fontSize: 20.0,
+                    ),
+                  ),
                 ),
               ),
               SizedBox(

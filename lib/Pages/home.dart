@@ -22,6 +22,7 @@ class _HomeState extends State<Home> {
             style: TextStyle(
                 color: Colors.grey[800],
               fontWeight: FontWeight.bold,
+              fontSize: 30.0,
             ),
             ),
           ),
@@ -29,29 +30,53 @@ class _HomeState extends State<Home> {
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-
-                height: 100.0,
-                child: RaisedButton(
-                  onPressed: (){},
-
+              ElevatedButton(
+                onPressed: (){},
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
                   child: const Text(
                     "Encrypt",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
+                    ),
                   ),
-                  color: Colors.lightGreenAccent[100],
-                  textColor: Colors.grey[800],
+                ),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.lightGreenAccent[100],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  elevation: 0.0,
+                  shadowColor: null,
                 ),
               ),
-              RaisedButton(
+              SizedBox(
+                height: 18.0,
+              ),
+              ElevatedButton(
                 onPressed: (){},
-
-                child: const Text(
-                  "Decrypt",
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: const Text(
+                    "Decrypt",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
+                    ),
+                  ),
                 ),
-                color: Colors.lightGreenAccent[100],
-                textColor: Colors.grey[800],
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.lightGreenAccent[100],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  elevation: 0.0,
+                  shadowColor: null,
+                ),
               ),
 
             ],

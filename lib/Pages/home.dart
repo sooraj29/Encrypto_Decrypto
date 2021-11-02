@@ -22,6 +22,7 @@ class _HomeState extends State<Home> {
             style: TextStyle(
                 color: Colors.grey[800],
               fontWeight: FontWeight.bold,
+              fontFamily: 'Open-sans',
               fontSize: 30.0,
             ),
             ),
@@ -31,6 +32,32 @@ class _HomeState extends State<Home> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20.0,0.0,10.0,10.0),
+                child: Text(
+                  "Encrypt: Upload a document for encrypting and saving it in your database",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20.0,0.0,10.0,10.0),
+                child: Text(
+                  "Decrypt: View a document from your database by decrypting it",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 70.0,
+              ),
               ElevatedButton(
                 onPressed: (){},
                 child: Padding(
@@ -39,8 +66,9 @@ class _HomeState extends State<Home> {
                     "Encrypt",
                     style: TextStyle(
                       color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
+                      // fontWeight: FontWeight.bold,
+                      fontSize: 30.0,
+                      fontFamily: 'ArchitectsDaughter',
                     ),
                   ),
                 ),
@@ -64,8 +92,9 @@ class _HomeState extends State<Home> {
                     "Decrypt",
                     style: TextStyle(
                       color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
+                      // fontWeight: FontWeight.bold,
+                      fontSize: 30.0,
+                        fontFamily: 'ArchitectsDaughter',
                     ),
                   ),
                 ),

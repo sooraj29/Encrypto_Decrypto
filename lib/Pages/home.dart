@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/cupertino.dart';
+import 'package:path/path.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -30,8 +32,27 @@ const MaterialColor primaryBlack = MaterialColor(
 const int _blackPrimaryValue = 0xFF000000;
 class _HomeState extends State<Home> {
 
+  UploadTask? task;
+  File? file;
+
+  Future selectfile() async{
+    final result = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+      allowedExtensions: ["pdf","doc"],
+      type: FileType.custom,
+    );
+    if (result==null) return ;
+    final path = result.files.single.path!;
+    setState(() {
+      file = File(path);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    final filename = file !=null? basename(file!.path) : 'No File selected';
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -95,7 +116,7 @@ class _HomeState extends State<Home> {
                   height: 20.0,
                 ),
                 ElevatedButton(
-                  onPressed: (){},
+                  onPressed: selectfile,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: const Text(
@@ -115,6 +136,17 @@ class _HomeState extends State<Home> {
                     ),
                     elevation: 0.0,
                     shadowColor: null,
+                  ),
+                ),
+                SizedBox(
+                  height: 8.0,
+                ),
+                Text(
+                  filename,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
                 SizedBox(

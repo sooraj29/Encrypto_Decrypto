@@ -39,6 +39,7 @@ dependencies:
   file_picker: ^4.2.0
   firebase_core: ^1.8.0
   firebase_storage: ^10.0.6
+  path: ^1.8.0
 
 
 dev_dependencies:

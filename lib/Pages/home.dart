@@ -7,6 +7,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:encrypto_decrypto/firebase_api.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -34,6 +35,7 @@ class _HomeState extends State<Home> {
 
   UploadTask? task;
   File? file;
+  bool isdisabled = true;
 
   Future selectfile() async{
     final result = await FilePicker.platform.pickFiles(
@@ -45,6 +47,18 @@ class _HomeState extends State<Home> {
     final path = result.files.single.path!;
     setState(() {
       file = File(path);
+      isdisabled = false;
+    });
+  }
+
+  Future uploadfile() async{
+    if (file == null) return;
+    final fileName = basename(file!.path);
+    final destination = '$fileName';
+    task = FirebaseApi.uploadFile(destination, file!);
+    setState(() {
+      file = null;
+      isdisabled = true;
     });
   }
 
@@ -115,28 +129,42 @@ class _HomeState extends State<Home> {
                 SizedBox(
                   height: 20.0,
                 ),
-                ElevatedButton(
-                  onPressed: selectfile,
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: const Text(
-                      "Encrypt",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        // fontWeight: FontWeight.bold,
-                        fontSize: 25.0,
-                        fontFamily: 'Open-Sans',
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: selectfile,
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: const Text(
+                          "Encrypt",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            // fontWeight: FontWeight.bold,
+                            fontSize: 25.0,
+                            fontFamily: 'Open-Sans',
+                          ),
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: primaryBlack,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        elevation: 0.0,
+                        shadowColor: null,
                       ),
                     ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: primaryBlack,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+                    IconButton(
+                      onPressed: isdisabled? null : uploadfile,
+                      icon: Icon(
+                        Icons.upload_file_outlined,
+                      ),
+                      iconSize: 25.0,
+                      color: Colors.white,
+                      disabledColor: primaryBlack,
                     ),
-                    elevation: 0.0,
-                    shadowColor: null,
-                  ),
+                  ],
                 ),
                 SizedBox(
                   height: 8.0,

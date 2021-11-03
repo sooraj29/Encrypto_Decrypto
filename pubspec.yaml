@@ -77,10 +77,10 @@ flutter:
   fonts:
     - family: Open-Sans
       fonts:
-        - asset: Assests/OpenSans-Regular.ttf
+        - asset: Assets/OpenSans-Regular.ttf
     - family: ArchitectsDaughter
       fonts:
-        - asset: Assests/ArchitectsDaughter-Regular.ttf
+        - asset: Assets/ArchitectsDaughter-Regular.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

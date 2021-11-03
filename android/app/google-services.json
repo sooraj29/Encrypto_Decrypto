@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "328017960853",
+    "project_id": "encrypto-decrypto",
+    "storage_bucket": "encrypto-decrypto.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328017960853:android:09407197623cacbead209c",
+        "android_client_info": {
+          "package_name": "com.sooraj29.encrypto_decrypto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "328017960853-97nbid9um7hl4ucbjej9v59ia7jpv5ri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXWnpTiIiPb6BD6MXs7xqWqXuucZjuyHA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "328017960853-97nbid9um7hl4ucbjej9v59ia7jpv5ri.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

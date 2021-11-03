@@ -2,6 +2,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:file_picker/file_picker.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -35,7 +38,7 @@ class _HomeState extends State<Home> {
         bottomNavigationBar: CurvedNavigationBar(
           color: Colors.black,
           backgroundColor: (Colors.grey[900])!,
-          items: <Widget>[
+          items: const <Widget>[
             Icon(Icons.home, size: 30, color:Colors.white),
             Icon(Icons.list, size: 30, color:Colors.white),
             Icon(Icons.info, size: 30, color:Colors.white),

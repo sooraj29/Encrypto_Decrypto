@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -29,7 +30,20 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
+        bottomNavigationBar: CurvedNavigationBar(
+          color: Colors.black,
+          backgroundColor: (Colors.grey[900])!,
+          items: <Widget>[
+            Icon(Icons.home, size: 30, color:Colors.white),
+            Icon(Icons.list, size: 30, color:Colors.white),
+            Icon(Icons.info, size: 30, color:Colors.white),
+          ],
+          onTap: (index) {
+            //Handle button tap
+          },
+        ),
         backgroundColor: Colors.grey[900],
         appBar: AppBar(
 
@@ -45,117 +59,119 @@ class _HomeState extends State<Home> {
             ),
           ),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20.0,0.0,10.0,10.0),
-                child: RichText(
-                  text: TextSpan(
-                    children: const [
-                      TextSpan(
-                        text: "Encrypt:",
+        body: PageView(
+          children: [Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20.0,0.0,10.0,10.0),
+                  child: RichText(
+                    text: TextSpan(
+                      children: const [
+                        TextSpan(
+                          text: "Encrypt:",
+                          style:TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Open-sans",
+                            color: Colors.white,
+                          )
+                          ,),
+                        TextSpan(
+                          text: " Upload a document for encrypting and saving it in your database",
+                        ),
+                      ],
+                      style: TextStyle(
+                        color: Colors.grey[400],
+                        fontSize: 20.0,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                ElevatedButton(
+                  onPressed: (){},
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: const Text(
+                      "Encrypt",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        // fontWeight: FontWeight.bold,
+                        fontSize: 25.0,
+                        fontFamily: 'Open-Sans',
+                      ),
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: primaryBlack,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    elevation: 0.0,
+                    shadowColor: null,
+                  ),
+                ),
+                SizedBox(
+                  height: 70.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20.0,0.0,10.0,10.0),
+                  child: RichText(
+                    text: TextSpan(
+                      children: const [
+                        TextSpan(
+                          text: "Decrypt:",
                         style:TextStyle(
                           fontWeight: FontWeight.bold,
                           fontFamily: "Open-sans",
                           color: Colors.white,
                         )
-                        ,),
-                      TextSpan(
-                        text: " Upload a document for encrypting and saving it in your database",
+                          ,),
+                        TextSpan(
+                          text: " View a document from your database by decrypting it",
+                        ),
+                      ],
+                      style: TextStyle(
+                        color: Colors.grey[400],
+                        fontSize: 20.0,
                       ),
-                    ],
-                    style: TextStyle(
-                      color: Colors.grey[400],
-                      fontSize: 20.0,
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              ElevatedButton(
-                onPressed: (){},
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: const Text(
-                    "Encrypt",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      // fontWeight: FontWeight.bold,
-                      fontSize: 25.0,
-                      fontFamily: 'Open-Sans',
-                    ),
-                  ),
+                SizedBox(
+                  height: 18.0,
                 ),
-                style: ElevatedButton.styleFrom(
-                  primary: primaryBlack,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  elevation: 0.0,
-                  shadowColor: null,
-                ),
-              ),
-              SizedBox(
-                height: 70.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20.0,0.0,10.0,10.0),
-                child: RichText(
-                  text: TextSpan(
-                    children: const [
-                      TextSpan(
-                        text: "Decrypt:",
-                      style:TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Open-sans",
-                        color: Colors.white,
-                      )
-                        ,),
-                      TextSpan(
-                        text: " View a document from your database by decrypting it",
+                ElevatedButton(
+                  onPressed: (){},
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: const Text(
+                      "Decrypt",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        // fontWeight: FontWeight.bold,
+                        fontSize: 25.0,
+                          fontFamily: 'Open-Sans',
                       ),
-                    ],
-                    style: TextStyle(
-                      color: Colors.grey[400],
-                      fontSize: 20.0,
                     ),
                   ),
-                ),
-              ),
-              SizedBox(
-                height: 18.0,
-              ),
-              ElevatedButton(
-                onPressed: (){},
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: const Text(
-                    "Decrypt",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      // fontWeight: FontWeight.bold,
-                      fontSize: 25.0,
-                        fontFamily: 'Open-Sans',
+                  style: ElevatedButton.styleFrom(
+                    primary: primaryBlack,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
                     ),
+                    elevation: 0.0,
+                    shadowColor: null,
                   ),
                 ),
-                style: ElevatedButton.styleFrom(
-                  primary: primaryBlack,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  elevation: 0.0,
-                  shadowColor: null,
-                ),
+
+              ],
+
               ),
-
-            ],
-
-          ),
+          ),Container()],
         ),
       ),
     );

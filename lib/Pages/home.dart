@@ -18,7 +18,7 @@ class _HomeState extends State<Home> {
         appBar: AppBar(
           backgroundColor: Colors.lightGreenAccent[100],
           title: Center(
-            child: Text("Encrypto_Decrypto",
+            child: Text("Encrypto Decrypto",
             style: TextStyle(
                 color: Colors.grey[800],
               fontWeight: FontWeight.bold,
@@ -41,6 +41,7 @@ class _HomeState extends State<Home> {
                         text: "Encrypt:",
                         style:TextStyle(
                           fontWeight: FontWeight.bold,
+                          fontFamily: "Open-sans",
                           color: Colors.white,
                         )
                         ,),
@@ -67,8 +68,8 @@ class _HomeState extends State<Home> {
                     style: TextStyle(
                       color: Colors.black,
                       // fontWeight: FontWeight.bold,
-                      fontSize: 30.0,
-                      fontFamily: 'ArchitectsDaughter',
+                      fontSize: 25.0,
+                      fontFamily: 'Open-Sans',
                     ),
                   ),
                 ),
@@ -93,6 +94,7 @@ class _HomeState extends State<Home> {
                         text: "Decrypt:",
                       style:TextStyle(
                         fontWeight: FontWeight.bold,
+                        fontFamily: "Open-sans",
                         color: Colors.white,
                       )
                         ,),
@@ -119,8 +121,8 @@ class _HomeState extends State<Home> {
                     style: TextStyle(
                       color: Colors.black,
                       // fontWeight: FontWeight.bold,
-                      fontSize: 30.0,
-                        fontFamily: 'ArchitectsDaughter',
+                      fontSize: 25.0,
+                        fontFamily: 'Open-Sans',
                     ),
                   ),
                 ),

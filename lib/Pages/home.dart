@@ -8,19 +8,36 @@ class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
-
+const MaterialColor primaryBlack = MaterialColor(
+  _blackPrimaryValue,
+  <int, Color>{
+    50: Color(0xFF000000),
+    100: Color(0xFF000000),
+    200: Color(0xFF000000),
+    300: Color(0xFF000000),
+    400: Color(0xFF000000),
+    500: Color(_blackPrimaryValue),
+    600: Color(0xFF000000),
+    700: Color(0xFF000000),
+    800: Color(0xFF000000),
+    900: Color(0xFF000000),
+  },
+);
+const int _blackPrimaryValue = 0xFF000000;
 class _HomeState extends State<Home> {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.grey[700],
+        backgroundColor: Colors.grey[900],
         appBar: AppBar(
-          backgroundColor: Colors.lightGreenAccent[100],
+
+          backgroundColor: primaryBlack,
           title: Center(
             child: Text("Encrypto Decrypto",
             style: TextStyle(
-                color: Colors.grey[800],
+                color: Colors.grey[300],
               fontWeight: FontWeight.bold,
               fontFamily: 'Open-sans',
               fontSize: 30.0,
@@ -66,7 +83,7 @@ class _HomeState extends State<Home> {
                   child: const Text(
                     "Encrypt",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.grey,
                       // fontWeight: FontWeight.bold,
                       fontSize: 25.0,
                       fontFamily: 'Open-Sans',
@@ -74,7 +91,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.lightGreenAccent[100],
+                  primary: primaryBlack,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0),
                   ),
@@ -119,7 +136,7 @@ class _HomeState extends State<Home> {
                   child: const Text(
                     "Decrypt",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.grey,
                       // fontWeight: FontWeight.bold,
                       fontSize: 25.0,
                         fontFamily: 'Open-Sans',
@@ -127,7 +144,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.lightGreenAccent[100],
+                  primary: primaryBlack,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0),
                   ),

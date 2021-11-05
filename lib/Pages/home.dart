@@ -1,13 +1,15 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names
+import 'package:encrypto_decrypto/firebase_file.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:encrypto_decrypto/firebase_api.dart';
+import 'package:encrypto_decrypto/firebase_file.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -34,10 +36,12 @@ const int _blackPrimaryValue = 0xFF000000;
 class _HomeState extends State<Home> {
 
   UploadTask? task;
-  File? file;
-  bool isdisabled = true;
+  File? encryptfile;
+  FirebaseFile? decryptfile;
+  bool isencryptdisabled = true;
+  bool isdecryptdisabled = true;
 
-  Future selectfile() async{
+  Future encrypt_selectfile() async{
     final result = await FilePicker.platform.pickFiles(
       allowMultiple: false,
       allowedExtensions: ["pdf","doc"],
@@ -46,26 +50,36 @@ class _HomeState extends State<Home> {
     if (result==null) return ;
     final path = result.files.single.path!;
     setState(() {
-      file = File(path);
-      isdisabled = false;
+      encryptfile = File(path);
+      isencryptdisabled = false;
     });
   }
 
   Future uploadfile() async{
-    if (file == null) return;
-    final fileName = basename(file!.path);
-    final destination = '$fileName';
-    task = FirebaseApi.uploadFile(destination, file!);
+    if (encryptfile == null) return;
+    final fileName = basename(encryptfile!.path);
+    final destination = fileName;
+    task = FirebaseApi.uploadFile(destination, encryptfile!);
     setState(() {
-      file = null;
-      isdisabled = true;
+      encryptfile = null;
+      isencryptdisabled = true;
+    });
+  }
+
+  Future downloadfile() async{
+    if(decryptfile == null) return;
+    await FirebaseApi.downloadFile(decryptfile!.ref);
+    setState(() {
+      decryptfile = null;
+      isdecryptdisabled = true;
     });
   }
 
   @override
   Widget build(BuildContext context) {
 
-    final filename = file !=null? basename(file!.path) : 'No File selected';
+    final encryptfilename = encryptfile !=null? basename(encryptfile!.path) : 'No File selected';
+    final decryptfilename = decryptfile !=null? decryptfile!.name : 'No File selected';
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -133,7 +147,7 @@ class _HomeState extends State<Home> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                      onPressed: selectfile,
+                      onPressed: encrypt_selectfile,
                       child: Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: const Text(
@@ -156,7 +170,7 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     IconButton(
-                      onPressed: isdisabled? null : uploadfile,
+                      onPressed: isencryptdisabled? null : uploadfile,
                       icon: Icon(
                         Icons.upload_file_outlined,
                       ),
@@ -170,7 +184,7 @@ class _HomeState extends State<Home> {
                   height: 8.0,
                 ),
                 Text(
-                  filename,
+                  encryptfilename,
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
@@ -207,32 +221,62 @@ class _HomeState extends State<Home> {
                 SizedBox(
                   height: 18.0,
                 ),
-                ElevatedButton(
-                  onPressed: (){},
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: const Text(
-                      "Decrypt",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        // fontWeight: FontWeight.bold,
-                        fontSize: 25.0,
-                          fontFamily: 'Open-Sans',
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async{
+                        dynamic dfile = await Navigator.pushNamed(context,'/selectfile');
+                        print(dfile);
+                        setState(() {
+                          decryptfile=dfile;
+                          isdecryptdisabled = dfile ? false : true;
+                        });
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: const Text(
+                          "Decrypt",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            // fontWeight: FontWeight.bold,
+                            fontSize: 25.0,
+                              fontFamily: 'Open-Sans',
+                          ),
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: primaryBlack,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        elevation: 0.0,
+                        shadowColor: null,
                       ),
                     ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: primaryBlack,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+                    IconButton(
+                      onPressed: isdecryptdisabled? null : downloadfile,
+                      icon: Icon(
+                        Icons.download_outlined,
+                      ),
+                      iconSize: 25.0,
+                      color: Colors.white,
+                      disabledColor: primaryBlack,
                     ),
-                    elevation: 0.0,
-                    shadowColor: null,
+                  ],
+                ),
+                SizedBox(
+                  height: 8.0,
+                ),
+                Text(
+                  decryptfilename,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
-
               ],
-
               ),
           ),Container()],
         ),

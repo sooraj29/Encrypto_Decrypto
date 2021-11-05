@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, non_constant_identifier_names
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, avoid_print
 import 'package:encrypto_decrypto/firebase_file.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
@@ -9,7 +9,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:encrypto_decrypto/firebase_api.dart';
-import 'package:encrypto_decrypto/firebase_file.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);

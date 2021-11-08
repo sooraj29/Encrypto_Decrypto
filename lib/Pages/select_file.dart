@@ -74,6 +74,14 @@ class _SelectFileState extends State<SelectFile> {
             ),
             ),
           ),
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios_new,
+            ),
+            onPressed: (){
+              Navigator.pop(context,false);
+            },
+          ),
         ),
         body: FutureBuilder<List<FirebaseFile>>(
           future: futureFiles,

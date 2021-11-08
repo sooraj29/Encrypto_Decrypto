@@ -37,6 +37,7 @@ class _LoadingState extends State<Loading> {
               "Loading",
             style: TextStyle(
               fontSize: 40.0,
+              fontFamily: "Open-sans",
               color: Colors.lightGreen[700],
             ),
           ),

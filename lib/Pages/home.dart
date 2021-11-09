@@ -1,14 +1,17 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names, avoid_print
 import 'package:encrypto_decrypto/firebase_file.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:path/path.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-// import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:encrypto_decrypto/firebase_api.dart';
+import 'files.dart';
+import 'about.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -74,15 +77,16 @@ class _HomeState extends State<Home> {
     });
   }
 
+  int _selectedIndex=0;
+  static const List _route=[Home(),Files(),About()];
+
   @override
   Widget build(BuildContext context) {
 
     final encryptfilename = encryptfile !=null? basename(encryptfile!.path) : 'No File selected';
     final decryptfilename = decryptfile !=null? decryptfile!.name : 'No File selected';
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         bottomNavigationBar: CurvedNavigationBar(
           color: Colors.black,
           backgroundColor: (Colors.grey[900])!,
@@ -91,7 +95,9 @@ class _HomeState extends State<Home> {
             Icon(Icons.list, size: 30, color:Colors.white),
             Icon(Icons.info, size: 30, color:Colors.white),
           ],
+          index: _selectedIndex,
           onTap: (index) {
+            Navigator.pushReplacement(context, PageTransition(child: _route[index], type: PageTransitionType.fade));
             //Handle button tap
           },
         ),
@@ -110,176 +116,252 @@ class _HomeState extends State<Home> {
             ),
           ),
         ),
-        body: PageView(
-          children: [Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0,0.0,10.0,10.0),
-                  child: RichText(
-                    text: TextSpan(
-                      children: const [
-                        TextSpan(
-                          text: "Encrypt:",
-                          style:TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Open-sans",
-                            color: Colors.white,
-                          )
-                          ,),
-                        TextSpan(
-                          text: " Upload a document for encrypting and saving it in your database",
-                        ),
-                      ],
-                      style: TextStyle(
-                        color: Colors.grey[400],
-                        fontSize: 20.0,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: encrypt_selectfile,
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: const Text(
-                          "Encrypt",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            // fontWeight: FontWeight.bold,
-                            fontSize: 25.0,
-                            fontFamily: 'Open-Sans',
-                          ),
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: primaryBlack,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        elevation: 0.0,
-                        shadowColor: null,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: isencryptdisabled? null : uploadfile,
-                      icon: Icon(
-                        Icons.upload_file_outlined,
-                      ),
-                      iconSize: 25.0,
-                      color: Colors.white,
-                      disabledColor: primaryBlack,
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 8.0,
-                ),
-                Text(
-                  encryptfilename,
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(
-                  height: 70.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0,0.0,10.0,10.0),
-                  child: RichText(
-                    text: TextSpan(
-                      children: const [
-                        TextSpan(
-                          text: "Decrypt:",
+        body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20.0,0.0,10.0,10.0),
+                child: RichText(
+                  text: TextSpan(
+                    children: const [
+                      TextSpan(
+                        text: "Encrypt:",
                         style:TextStyle(
                           fontWeight: FontWeight.bold,
                           fontFamily: "Open-sans",
                           color: Colors.white,
                         )
-                          ,),
-                        TextSpan(
-                          text: " View a document from your database by decrypting it",
-                        ),
-                      ],
-                      style: TextStyle(
-                        color: Colors.grey[400],
-                        fontSize: 20.0,
+                        ,),
+                      TextSpan(
+                        text: " Upload a document for encrypting and saving it in your database",
                       ),
+                    ],
+                    style: TextStyle(
+                      color: Colors.grey[400],
+                      fontSize: 20.0,
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 18.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () async{
-                        dynamic dfile = await Navigator.pushNamed(context,'/selectfile');
-                        print(dfile);
-                        setState(() {
-                          decryptfile=dfile;
-                          isdecryptdisabled = dfile ? false : true;
-                        });
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: const Text(
-                          "Decrypt",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            // fontWeight: FontWeight.bold,
-                            fontSize: 25.0,
-                              fontFamily: 'Open-Sans',
-                          ),
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: primaryBlack,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        elevation: 0.0,
-                        shadowColor: null,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: isdecryptdisabled? null : downloadfile,
-                      icon: Icon(
-                        Icons.download_outlined,
-                      ),
-                      iconSize: 25.0,
-                      color: Colors.white,
-                      disabledColor: primaryBlack,
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 8.0,
-                ),
-                Text(
-                  decryptfilename,
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
               ),
-          ),Container()],
+              SizedBox(
+                height: 20.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: encrypt_selectfile,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: const Text(
+                        "Encrypt",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          // fontWeight: FontWeight.bold,
+                          fontSize: 25.0,
+                          fontFamily: 'Open-Sans',
+                        ),
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: primaryBlack,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      elevation: 0.0,
+                      shadowColor: null,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: isencryptdisabled? null : uploadfile,
+                    icon: Icon(
+                      Icons.upload_file_outlined,
+                    ),
+                    iconSize: 25.0,
+                    color: Colors.white,
+                    disabledColor: primaryBlack,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              Text(
+                encryptfilename,
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(
+                height: 70.0,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20.0,0.0,10.0,10.0),
+                child: RichText(
+                  text: TextSpan(
+                    children: const [
+                      TextSpan(
+                        text: "Decrypt:",
+                      style:TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Open-sans",
+                        color: Colors.white,
+                      )
+                        ,),
+                      TextSpan(
+                        text: " View a document from your database by decrypting it",
+                      ),
+                    ],
+                    style: TextStyle(
+                      color: Colors.grey[400],
+                      fontSize: 20.0,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 18.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () async{
+                      dynamic dfile = await Navigator.pushNamed(context,'selectfile');
+                      print(dfile);
+                      setState(() {
+                        decryptfile=dfile;
+                        isdecryptdisabled = dfile ? false : true;
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: const Text(
+                        "Decrypt",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          // fontWeight: FontWeight.bold,
+                          fontSize: 25.0,
+                            fontFamily: 'Open-Sans',
+                        ),
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: primaryBlack,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      elevation: 0.0,
+                      shadowColor: null,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: isdecryptdisabled? null : downloadfile,
+                    icon: Icon(
+                      Icons.download_outlined,
+                    ),
+                    iconSize: 25.0,
+                    color: Colors.white,
+                    disabledColor: primaryBlack,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              Text(
+                decryptfilename,
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ],
         ),
-      ),
     );
   }
 }
+
+
+
+
+//
+//
+//
+//
+//
+// class About extends StatefulWidget {
+//   const About({Key? key}) : super(key: key);
+//
+//   @override
+//   _AboutState createState() => _AboutState();
+// }
+//
+// class _AboutState extends State<About> {
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: Colors.grey[900],
+//       appBar: AppBar(
+//         backgroundColor: Colors.black,
+//         title: Center(
+//           child: Text("Encrypto Decrypto",
+//             style: TextStyle(
+//               color: Colors.grey[300],
+//               fontWeight: FontWeight.bold,
+//               fontFamily: 'Open-sans',
+//               fontSize: 30.0,
+//             ),
+//           ),
+//         ),
+//       ),
+//       body:Container(
+//         child: Text("About"),
+//       ),
+//     );
+//   }
+// }
+//
+//
+//
+//
+//
+//
+//
+//
+// class Files extends StatefulWidget {
+//   const Files({Key? key}) : super(key: key);
+//
+//   @override
+//   _FilesState createState() => _FilesState();
+// }
+//
+// class _FilesState extends State<Files> {
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: Colors.grey[900],
+//       appBar: AppBar(
+//         backgroundColor: Colors.black,
+//         title: Center(
+//           child: Text("Encrypto Decrypto",
+//             style: TextStyle(
+//               color: Colors.grey[300],
+//               fontWeight: FontWeight.bold,
+//               fontFamily: 'Open-sans',
+//               fontSize: 30.0,
+//             ),
+//           ),
+//         ),
+//       ),
+//       body:Container(
+//         child: Text("Files"),
+//       ),
+//     );
+//   }
+// }

@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'Pages/home.dart';
 import 'Pages/loading.dart';
 import 'Pages/select_file.dart';
-// import 'Pages/about.dart';
+import 'Pages/about.dart';
+import 'Pages/files.dart';
 
 Future main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,8 +16,9 @@ Future main() async{
     routes:{
       '/':(context) => Loading(),
       'home':(context) => Home(),
-      '/selectfile':(context) => SelectFile(),
-      // 'about':(context) => About(),
+      'selectfile':(context) => SelectFile(),
+      'about':(context) => About(),
+      'files':(context) => Files(),
     }
   ),
   );

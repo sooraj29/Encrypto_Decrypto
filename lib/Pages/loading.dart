@@ -31,7 +31,7 @@ class _LoadingState extends State<Loading> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SpinKitCircle(
-            color: Colors.lightGreenAccent[100],
+            color: Colors.grey[100],
             size: 100.0,
           ),
           Text(
@@ -44,7 +44,7 @@ class _LoadingState extends State<Loading> {
           ),
         ],
       ),
-      backgroundColor: Colors.grey[700],
+      backgroundColor: Colors.grey[900],
     );
   }
 }

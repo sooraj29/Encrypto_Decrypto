@@ -16,7 +16,7 @@ class About extends StatefulWidget {
 
 class _AboutState extends State<About> {
 
-  int _selectedIndex=2;
+  final int _selectedIndex=2;
   static const List _route=[Home(),Files(),About()];
 
   @override
@@ -26,9 +26,24 @@ class _AboutState extends State<About> {
           color: Colors.black,
           backgroundColor: (Colors.grey[900])!,
           items: const <Widget>[
-            Icon(Icons.home, size: 30, color:Colors.white),
-            Icon(Icons.list, size: 30, color:Colors.white),
-            Icon(Icons.info, size: 30, color:Colors.white),
+            Tooltip(
+              child: Icon(Icons.home, size: 30, color:Colors.white),
+              enableFeedback: false,
+              message: "Home",
+              showDuration: Duration(seconds: 5),
+            ),
+            Tooltip(
+              child: Icon(Icons.file_download, size: 30, color:Colors.white),
+              enableFeedback: false,
+              showDuration: Duration(seconds: 5),
+              message: "Downloaded\nFiles",
+            ),
+            Tooltip(
+              child: Icon(Icons.info, size: 30, color:Colors.white),
+              message: "About",
+              enableFeedback: false,
+              showDuration: Duration(seconds: 5),
+            ),
           ],
           index: _selectedIndex,
           onTap: (index) {
@@ -50,11 +65,35 @@ class _AboutState extends State<About> {
             ),
           ),
         ),
-        body:Container(
-          child: Text("About",
-            style: TextStyle(fontSize: 30.0,
-            color: Colors.white,),
+        body:Column(
+          children: [
+            ListTile(
+            tileColor: Colors.grey[800],
+            leading: SizedBox(
+              width: 52,
+              height: 52,
+              child: Icon(
+                CupertinoIcons.info,
+                color: Colors.white,
+              ),
+            ),
+            title: Text(
+              'About Us',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: Colors.white,
+              ),
+            ),
           ),
+            const SizedBox(height: 12,),
+            Expanded(
+              child: Text("About",
+                style: TextStyle(fontSize: 30.0,
+                color: Colors.white,),
+              ),
+            ),
+          ],
         ),
     );
   }

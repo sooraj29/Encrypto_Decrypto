@@ -77,7 +77,7 @@ class _HomeState extends State<Home> {
     });
   }
 
-  int _selectedIndex=0;
+  final int _selectedIndex=0;
   static const List _route=[Home(),Files(),About()];
 
   @override
@@ -91,9 +91,24 @@ class _HomeState extends State<Home> {
           color: Colors.black,
           backgroundColor: (Colors.grey[900])!,
           items: const <Widget>[
-            Icon(Icons.home, size: 30, color:Colors.white),
-            Icon(Icons.list, size: 30, color:Colors.white),
-            Icon(Icons.info, size: 30, color:Colors.white),
+            Tooltip(
+              child: Icon(Icons.home, size: 30, color:Colors.white),
+              enableFeedback: false,
+              message: "Home",
+              showDuration: Duration(seconds: 5),
+            ),
+            Tooltip(
+              child: Icon(Icons.file_download, size: 30, color:Colors.white),
+              enableFeedback: false,
+              showDuration: Duration(seconds: 5),
+              message: "Downloaded\nFiles",
+            ),
+            Tooltip(
+              child: Icon(Icons.info, size: 30, color:Colors.white),
+              message: "About",
+              enableFeedback: false,
+              showDuration: Duration(seconds: 5),
+            ),
           ],
           index: _selectedIndex,
           onTap: (index) {
@@ -125,7 +140,7 @@ class _HomeState extends State<Home> {
                   text: TextSpan(
                     children: const [
                       TextSpan(
-                        text: "Encrypt:",
+                        text: "Encrypt :\n",
                         style:TextStyle(
                           fontWeight: FontWeight.bold,
                           fontFamily: "Open-sans",
@@ -133,7 +148,7 @@ class _HomeState extends State<Home> {
                         )
                         ,),
                       TextSpan(
-                        text: " Upload a document for encrypting and saving it in your database",
+                        text: "Upload a document for encrypting and saving it in your database",
                       ),
                     ],
                     style: TextStyle(
@@ -173,7 +188,18 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   IconButton(
-                    onPressed: isencryptdisabled? null : uploadfile,
+                    onPressed: isencryptdisabled? null : (){
+                      uploadfile();
+                      final Snackbar = SnackBar(
+                        content: Text("Encrypted And Uploaded!",
+                            style: TextStyle(letterSpacing: 3.0)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        behavior: SnackBarBehavior.floating,
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(Snackbar);
+                    },
                     icon: Icon(
                       Icons.upload_file_outlined,
                     ),
@@ -203,7 +229,7 @@ class _HomeState extends State<Home> {
                   text: TextSpan(
                     children: const [
                       TextSpan(
-                        text: "Decrypt:",
+                        text: "Decrypt :\n",
                       style:TextStyle(
                         fontWeight: FontWeight.bold,
                         fontFamily: "Open-sans",
@@ -211,7 +237,7 @@ class _HomeState extends State<Home> {
                       )
                         ,),
                       TextSpan(
-                        text: " View a document from your database by decrypting it",
+                        text: "View a document from your database by decrypting it",
                       ),
                     ],
                     style: TextStyle(
@@ -258,9 +284,21 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   IconButton(
-                    onPressed: isdecryptdisabled? null : downloadfile,
+                    onPressed: isdecryptdisabled? null : (){
+                      downloadfile();
+                      final Snackbar = SnackBar(
+                        content: Text("Decrypted And Downloaded!",
+                        style: TextStyle(letterSpacing: 3.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        behavior: SnackBarBehavior.floating,
+                        elevation: 40.0,
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(Snackbar);
+                    },
                     icon: Icon(
-                      Icons.download_outlined,
+                      Icons.download_for_offline_outlined,
                     ),
                     iconSize: 25.0,
                     color: Colors.white,

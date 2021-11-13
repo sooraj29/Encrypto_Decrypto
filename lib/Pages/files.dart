@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names
 
 import 'dart:io';
 
@@ -10,7 +10,7 @@ import 'package:page_transition/page_transition.dart';
 import 'about.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
-import 'package:file_picker/file_picker.dart';
+
 
 
 
@@ -23,7 +23,7 @@ class Files extends StatefulWidget {
 
 class _FilesState extends State<Files> {
 
-  int _selectedIndex=1;
+  final int _selectedIndex=1;
   static const List _route=[Home(),Files(),About()];
   List Files_list = [];
 
@@ -61,9 +61,24 @@ class _FilesState extends State<Files> {
           color: Colors.black,
           backgroundColor: (Colors.grey[900])!,
           items: const <Widget>[
-            Icon(Icons.home, size: 30, color:Colors.white),
-            Icon(Icons.list, size: 30, color:Colors.white),
-            Icon(Icons.info, size: 30, color:Colors.white),
+            Tooltip(
+              child: Icon(Icons.home, size: 30, color:Colors.white),
+              enableFeedback: false,
+              message: "Home",
+              showDuration: Duration(seconds: 5),
+            ),
+            Tooltip(
+              child: Icon(Icons.file_download, size: 30, color:Colors.white),
+              enableFeedback: false,
+              showDuration: Duration(seconds: 5),
+              message: "Downloaded\nFiles",
+            ),
+            Tooltip(
+              child: Icon(Icons.info, size: 30, color:Colors.white),
+              message: "About",
+              enableFeedback: false,
+              showDuration: Duration(seconds: 5),
+            ),
           ],
           index: _selectedIndex,
           onTap: (index) {
@@ -85,12 +100,38 @@ class _FilesState extends State<Files> {
             ),
           ),
           ),
-        body:ListView.builder(
-            itemCount: Files_list.length,
-            itemBuilder: (context,index){
-              final file = File(Files_list[index].toString());
-              return buildFile(context, file);
-            }
+        body:Column(
+          children: [
+            ListTile(
+              tileColor: Colors.grey[800],
+              leading: SizedBox(
+                width: 52,
+                height: 52,
+                child: Icon(
+                  Icons.file_copy,
+                  color: Colors.white,
+                ),
+              ),
+              title: Text(
+                'Downloaded Files',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            const SizedBox(height: 12,),
+            Expanded(
+                child: ListView.builder(
+                    itemCount: Files_list.length,
+                    itemBuilder: (context,index){
+                      final file = File(Files_list[index].toString());
+                      return buildFile(context, file);
+                    }
+                ),
+            ),
+          ],
         ),
       // floatingActionButton: ElevatedButton(
       //   child: Text("File Manager"),

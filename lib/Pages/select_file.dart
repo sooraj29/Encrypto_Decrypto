@@ -21,9 +21,20 @@ class _SelectFileState extends State<SelectFile> {
     super.initState();
     futureFiles = FirebaseApi.listAll('');
   }
+  var refreshKey = GlobalKey<RefreshIndicatorState>();
+  Future<Null> refreshList() async {
+    refreshKey.currentState?.show(atTop: false);
+    await Future.delayed(Duration(seconds: 2));
+
+    setState(() {
+      futureFiles = FirebaseApi.listAll('');
+    });
+
+    return null;
+  }
 
   void getFile(file){
-  Navigator.pop(context,file);
+    Navigator.pop(context,file);
   }
 
   Widget buildFile(BuildContext context, FirebaseFile file) => ListTile(
@@ -83,34 +94,38 @@ class _SelectFileState extends State<SelectFile> {
             },
           ),
         ),
-        body: FutureBuilder<List<FirebaseFile>>(
-          future: futureFiles,
-          builder: (context,snapshot){
-            switch(snapshot.connectionState){
-              case ConnectionState.waiting: return Center(child: CircularProgressIndicator(),);
-              default: if(snapshot.hasError) {
-                return Center(child: Text("Some error occured"),);
-              } else {
-                final files = snapshot.data;
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildHeader(files!.length),
-                    const SizedBox(height: 12,),
-                    Expanded(
-                        child: ListView.builder(
-                          itemCount: files.length,
-                          itemBuilder: (context, index) {
-                            final file = files[index];
-                            return buildFile(context, file);
-                          },
-                        )
-                    ),
-                  ],
-                );
+        body: RefreshIndicator(
+          onRefresh: refreshList,
+          key:refreshKey,
+          child: FutureBuilder<List<FirebaseFile>>(
+            future: futureFiles,
+            builder: (context,snapshot){
+              switch(snapshot.connectionState){
+                case ConnectionState.waiting: return Center(child: CircularProgressIndicator(),);
+                default: if(snapshot.hasError) {
+                  return Center(child: Text("Some error occured"),);
+                } else {
+                  final files = snapshot.data;
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      buildHeader(files!.length),
+                      const SizedBox(height: 12,),
+                      Expanded(
+                          child: ListView.builder(
+                            itemCount: files.length,
+                            itemBuilder: (context, index) {
+                              final file = files[index];
+                              return buildFile(context, file);
+                            },
+                          )
+                      ),
+                    ],
+                  );
+                }
               }
-            }
-          },
+            },
+          ),
         ),
       ),
     );

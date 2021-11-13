@@ -50,20 +50,17 @@ class _AboutState extends State<About> {
             ),
           ),
         ),
-        body:Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
-              Text("About",
-                style: TextStyle(fontSize: 30.0,
-                color: Colors.white,),
+        body:Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: const [
+            Text("About",
+              style: TextStyle(fontSize: 30.0,
+              color: Colors.white,),
 
-              ),
-              Text("The project aims to encrypt, upload and decrypt the documents using AES standard. \nMade By:\nSooraj S\nSiddhesh B\nSoorya SG",
-                  style: TextStyle(color:Colors.white, fontSize: 20.0,fontFamily: "open-sans"))
-            ],
-          ),
-          
+            ),
+            Text("The project aims to encrypt, upload and decrypt the documents using AES standard. \nMade By:\nSooraj S\nSiddhesh B\nSoorya SG",
+                style: TextStyle(color:Colors.white, fontSize: 20.0,fontFamily: "open-sans"))
+          ],
         ),
     );
   }

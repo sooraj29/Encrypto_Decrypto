@@ -2,7 +2,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'files.dart';
 
 class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);
@@ -14,7 +13,7 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
 
   void strttime() async{
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 3));
     Navigator.pushReplacementNamed(context, 'home');
   }
 

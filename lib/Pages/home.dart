@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
   Future encrypt_selectfile() async{
     final result = await FilePicker.platform.pickFiles(
       allowMultiple: false,
-      allowedExtensions: ["pdf","doc"],
+      allowedExtensions: ["pdf","doc","docx"],
       type: FileType.custom,
     );
     if (result==null) return ;
@@ -233,7 +233,7 @@ class _HomeState extends State<Home> {
                       print(dfile);
                       setState(() {
                         decryptfile=dfile;
-                        isdecryptdisabled = dfile ? false : true;
+                        isdecryptdisabled = dfile==null ? true : false;
                       });
                     },
                     child: Padding(
@@ -284,84 +284,3 @@ class _HomeState extends State<Home> {
     );
   }
 }
-
-
-
-
-//
-//
-//
-//
-//
-// class About extends StatefulWidget {
-//   const About({Key? key}) : super(key: key);
-//
-//   @override
-//   _AboutState createState() => _AboutState();
-// }
-//
-// class _AboutState extends State<About> {
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.grey[900],
-//       appBar: AppBar(
-//         backgroundColor: Colors.black,
-//         title: Center(
-//           child: Text("Encrypto Decrypto",
-//             style: TextStyle(
-//               color: Colors.grey[300],
-//               fontWeight: FontWeight.bold,
-//               fontFamily: 'Open-sans',
-//               fontSize: 30.0,
-//             ),
-//           ),
-//         ),
-//       ),
-//       body:Container(
-//         child: Text("About"),
-//       ),
-//     );
-//   }
-// }
-//
-//
-//
-//
-//
-//
-//
-//
-// class Files extends StatefulWidget {
-//   const Files({Key? key}) : super(key: key);
-//
-//   @override
-//   _FilesState createState() => _FilesState();
-// }
-//
-// class _FilesState extends State<Files> {
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.grey[900],
-//       appBar: AppBar(
-//         backgroundColor: Colors.black,
-//         title: Center(
-//           child: Text("Encrypto Decrypto",
-//             style: TextStyle(
-//               color: Colors.grey[300],
-//               fontWeight: FontWeight.bold,
-//               fontFamily: 'Open-sans',
-//               fontSize: 30.0,
-//             ),
-//           ),
-//         ),
-//       ),
-//       body:Container(
-//         child: Text("Files"),
-//       ),
-//     );
-//   }
-// }

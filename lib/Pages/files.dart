@@ -61,30 +61,16 @@ class _FilesState extends State<Files> {
     @override
     Widget build(BuildContext context) {
       return Scaffold(
-        bottomNavigationBar: CurvedNavigationBar(
-          color: Colors.black,
-          backgroundColor: (Colors.grey[900])!,
-          items: const <Widget>[
-            Tooltip(
-              child: Icon(Icons.home, size: 30, color: Colors.white),
-              enableFeedback: false,
-              message: "Home",
-              showDuration: Duration(seconds: 5),
-            ),
-            Tooltip(
-              child: Icon(Icons.file_download, size: 30, color: Colors.white),
-              enableFeedback: false,
-              showDuration: Duration(seconds: 5),
-              message: "Downloaded\nFiles",
-            ),
-            Tooltip(
-              child: Icon(Icons.info, size: 30, color: Colors.white),
-              message: "About",
-              enableFeedback: false,
-              showDuration: Duration(seconds: 5),
-            ),
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.black,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.grey,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: Icon(Icons.home_outlined,size: 30.0),backgroundColor: Colors.white,label: "Home"),
+            BottomNavigationBarItem(icon: Icon(CupertinoIcons.download_circle_fill,size: 30.0),backgroundColor: Colors.grey,label: "Downloaded Files"),
+            BottomNavigationBarItem(icon: Icon(Icons.info_outlined,size: 30.0),backgroundColor: Colors.grey,label: "About"),
           ],
-          index: _selectedIndex,
+          currentIndex: _selectedIndex,
           onTap: (index) {
             Navigator.pushReplacement(context, PageTransition(
                 child: _route[index], type: PageTransitionType.fade));

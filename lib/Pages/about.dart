@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'files.dart';
 import 'home.dart';
 import 'package:page_transition/page_transition.dart';
@@ -16,7 +15,7 @@ class About extends StatefulWidget {
 
 class _AboutState extends State<About> {
 
-  int _selectedIndex=2;
+  final int _selectedIndex=2;
   static const List _route=[Home(),Files(),About()];
 
   @override

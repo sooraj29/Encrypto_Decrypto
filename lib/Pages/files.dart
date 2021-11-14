@@ -1,10 +1,9 @@
-// ignore_for_file: prefer_const_constructors, non_constant_identifier_names
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, prefer_void_to_null
 
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'home.dart';
 import 'package:page_transition/page_transition.dart';
 import 'about.dart';
@@ -56,6 +55,15 @@ class _FilesState extends State<Files> {
           onTap: () async {
             await OpenFile.open(file.path.substring(7, file.path.length - 1));
           },
+          trailing: IconButton(
+            icon: Icon(CupertinoIcons.delete,color: Colors.redAccent,),
+            onPressed: ()async{
+                              final path=file.path.substring(7, file.path.length - 1);
+                              final del=File(path);
+                              await del.delete();
+                              getlist();
+                              }
+          ),
         );
 
     @override

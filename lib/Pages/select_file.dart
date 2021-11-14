@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_void_to_null
 
 import 'package:encrypto_decrypto/firebase_file.dart';
 import 'package:flutter/material.dart';
@@ -103,7 +103,7 @@ class _SelectFileState extends State<SelectFile> {
               switch(snapshot.connectionState){
                 case ConnectionState.waiting: return Center(child: CircularProgressIndicator(),);
                 default: if(snapshot.hasError) {
-                  return Center(child: Text("Some error occured"),);
+                  return Center(child: Text("Some error occurred"),);
                 } else {
                   final files = snapshot.data;
                   return Column(

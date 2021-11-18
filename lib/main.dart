@@ -8,6 +8,8 @@ import 'Pages/select_file.dart';
 import 'Pages/about.dart';
 import 'Pages/files.dart';
 
+//The main program which is running
+
 Future main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

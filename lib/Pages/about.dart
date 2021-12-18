@@ -64,7 +64,9 @@ class _AboutState extends State<About> {
               padding: EdgeInsets.all(10.0),
               child: Text("The project aims to encrypt, upload and decrypt the documents using AES standard. \n\n\nMade By:\n\nSooraj S\nSiddhesh B\nSoorya SG",
                   style: TextStyle(color:Colors.white, fontSize: 20.0,fontFamily: "open-sans")),
+
             )
+
           ],
         ),
     );

@@ -11,6 +11,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:encrypto_decrypto/firebase_api.dart';
 import 'files.dart';
 import 'about.dart';
+// import 'dart:typed_data';
+import 'package:aes_crypt_null_safe/aes_crypt_null_safe.dart';
+import 'package:path_provider/path_provider.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -42,6 +45,7 @@ class _HomeState extends State<Home> {
   FirebaseFile? decryptfile;
   bool isencryptdisabled = true;
   bool isdecryptdisabled = true;
+  var crypt = AesCrypt('my cool password');
 
   Future encrypt_selectfile() async{
     final result = await FilePicker.platform.pickFiles(
@@ -51,26 +55,67 @@ class _HomeState extends State<Home> {
     );
     if (result==null) return ;
     final path = result.files.single.path!;
+    // print("sooth");
+
     setState(() {
       encryptfile = File(path);
       isencryptdisabled = false;
     });
   }
 
-  Future uploadfile() async{
-    if (encryptfile == null) return;
-    final fileName = basename(encryptfile!.path);
-    final destination = fileName;
-    task = FirebaseApi.uploadFile(destination, encryptfile!);
-    setState(() {
-      encryptfile = null;
-      isencryptdisabled = true;
-    });
+  Future uploadfile() async {
+    try {
+      if (encryptfile == null) return;
+      final fileName = basename(encryptfile!.path);
+      final destination = fileName;
+      dynamic encFilepath;
+      crypt.setOverwriteMode(AesCryptOwMode.on);
+      // print(encryptfile!.path.toString().substring(0,62));
+      try {
+        encFilepath = crypt.encryptFileSync(encryptfile!.path.toString());
+        print('The encryption has been completed successfully.');
+        print('Encrypted file: $encFilepath');
+      }
+      on AesCryptException catch (e) {
+        if (e.type == AesCryptExceptionType.destFileExists) {
+          print('The encryption has been completed unsuccessfully.');
+          print(e.message);
+        }
+      }
+      // print(encFilepath.runtimeType);
+      // print(encryptfile.runtimeType);
+      encryptfile = File(encFilepath);
+      task = FirebaseApi.uploadFile(destination, encryptfile!);
+      setState(() {
+        encryptfile = null;
+        isencryptdisabled = true;
+      });
+    }
+    catch(e) {
+      print(e);
+    }
   }
 
   Future downloadfile() async{
     if(decryptfile == null) return;
     await FirebaseApi.downloadFile(decryptfile!.ref);
+    dynamic decFilepath;
+    final dir = await getExternalStorageDirectory();
+    // print(dir!.path);
+    // print(decryptfile!.name);
+    try {
+      decFilepath = crypt.decryptFileSync(dir!.path.toString()+'/'+decryptfile!.name.toString(),dir.path.toString()+'/dec_'+decryptfile!.name.toString());
+      print('The decryption has been completed successfully.');
+      print('Decrypted file 2: $decFilepath');
+      //print('File content: ' + File(decFilepath).readAsStringSync());
+    } on AesCryptException catch (e) {
+      if (e.type == AesCryptExceptionType.destFileExists) {
+        print('The decryption has been completed unsuccessfully.');
+        print(e.message);
+      }
+    }
+    final del=File(dir!.path.toString()+'/'+decryptfile!.name.toString());
+    await del.delete();
     setState(() {
       decryptfile = null;
       isdecryptdisabled = true;
@@ -176,6 +221,7 @@ class _HomeState extends State<Home> {
                   IconButton(
                     onPressed: isencryptdisabled? null : (){
                       uploadfile();
+                      // encrypt_file();
                       final Snackbar = SnackBar(
                         content: Text("Encrypted And Uploaded!",
                             style: TextStyle(letterSpacing: 3.0)),

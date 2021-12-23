@@ -6,7 +6,7 @@ import 'package:path/path.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-// import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:encrypto_decrypto/firebase_api.dart';
 import 'files.dart';
@@ -14,6 +14,8 @@ import 'about.dart';
 // import 'dart:typed_data';
 import 'package:aes_crypt_null_safe/aes_crypt_null_safe.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);

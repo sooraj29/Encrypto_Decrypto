@@ -44,6 +44,7 @@ dependencies:
   page_transition: "^2.0.4"
   open_file: ^3.2.0
   aes_crypt_null_safe: ^2.0.2
+  firebase_auth: ^3.3.4
 
 
 dev_dependencies:

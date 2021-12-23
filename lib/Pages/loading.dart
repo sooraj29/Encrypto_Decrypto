@@ -14,7 +14,7 @@ class _LoadingState extends State<Loading> {
 
   void strttime() async{
     await Future.delayed(Duration(seconds: 3));
-    Navigator.pushReplacementNamed(context, 'home');
+    Navigator.pushReplacementNamed(context, 'sign-in');
   }
 
   @override
